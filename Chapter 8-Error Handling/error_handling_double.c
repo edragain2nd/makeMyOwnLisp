@@ -37,7 +37,7 @@ typedef struct {
 } lval;
 
 /* Create a new number type lval */
-lval lval_num(long x) {
+lval lval_num(double x) {
     lval v;
     v.type = LVAL_NUM;
     v.num = x;
@@ -105,7 +105,7 @@ lval eval(mpc_ast_t *t) {
     if (strstr(t->tag, "number")) {
         /* Check if there is some error in conversion */
         errno = 0;
-        long x = strtol(t->contents, NULL, 10);
+        double x = strtod(t->contents, NULL);
         return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
     }
 
